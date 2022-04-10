@@ -1,4 +1,3 @@
-
 class Cobrinha{
     constructor(x, y, size){
         this.x = x
