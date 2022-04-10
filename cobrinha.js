@@ -55,12 +55,11 @@ class Maca{
                 }
             }
             console.log(this.x , this.y)
+            this.size = cobrinha.size
+            this.color = "red"
             if(!isTouching){
                 break;
             }
-            this.color = "pink"
-            this.size = cobrinha.size
-            
         }
     }
 }
@@ -78,7 +77,7 @@ window.onload = ()=>{
 }
 
 function gameLoop(){
-    setInterval(show, 1000/15) 
+    setInterval(show, 1000/20) 
 }
 
 function show(){
@@ -92,7 +91,21 @@ function update(){
     console.log("update")
     cobrinha.move()
     eatMaca()
+    checkHitWall();
 
+}
+
+function checkHitWall(){
+    var headTail = cobrinha.tail[cobrinha.tail.length -1]
+    if(headTail.x == - cobrinha.size) {
+        headTail.x = canvas.width - cobrinha.size
+    } else if(headTail.x == canvas.width) {
+        headTail.x = 0
+    } else if(headTail.y == - cobrinha.size) {
+        headTail.y = canvas.height - cobrinha.size
+    } else if(headTail.y == canvas.height) {
+        headTail.y = 0
+    }
 }
 
 function eatMaca(){
@@ -108,13 +121,12 @@ function draw(){
     createRect(0,0, canvas.width, canvas.height)
     for(var i =0; i < cobrinha.tail.length; i++){
         createRect(cobrinha.tail[i].x + 2.5, cobrinha.tail[i].y + 2.5,
-            cobrinha.size - 5, cobrinha.size- 5, 'white')
+            cobrinha.size - 5, cobrinha.size- 5, 'green')
     }
 
     canvasContext.font = "20px Arial"
-    canvasContext.fillStyle = "#00FF42"
-    canvasContext.fillText("Score: ", (cobrinha.tail.length +1), 
-    canvas.width -120, 18 );
+    canvasContext.fillStyle = "#99ffb3"
+    canvasContext.fillText("Score: "+ (cobrinha.tail.length -1),canvas.width - 120, 18 );
     createRect(maca.x, maca.y, maca.size, maca.size, maca.color)
 }
 
